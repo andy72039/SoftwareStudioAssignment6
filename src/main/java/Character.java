@@ -8,12 +8,22 @@ import processing.core.PApplet;
 */
 public class Character {
 	
-	private MainApplet parent;
+	public float x, y, radius;
+	private String name;
+	private PApplet parent;
+	private ArrayList<Character> targets;
+	private int value;
+	private String color;
 
-	public Character(MainApplet parent){
 
-		this.parent = parent;
-		
+	public Character(PApplet parent, String name, float x, float y, int value, String color) {
+		this.targets = new ArrayList<Character>();
+	this.x = x;
+	this.y = y;
+	this.name = name;
+	this.parent = parent;
+	this.value = value;
+	this.color = color;
 	}
 
 	public void display(){
