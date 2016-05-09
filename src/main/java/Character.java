@@ -1,5 +1,6 @@
 package main.java;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
@@ -10,32 +11,57 @@ import processing.core.PApplet;
 */
 public class Character {
 	
-	public float x, y, radius;
-	private String name;
+	public float anchor_x, anchor_y;
+	public float cur_x, cur_y;
+	public String name;
 	private PApplet parent;
 	private ArrayList<Character> targets;
 	private int value;
-	private String color;
+	private int color;
+	public boolean selected;
+	
+	public int radius = 20;
 
-
-	public Character(PApplet parent, String name, float x, float y, int value, String color) {
+	public Character(PApplet parent, String name, float x, float y, int value, int color) {
 		this.targets = new ArrayList<Character>();
-		this.x = x;
-		this.y = y;
+		this.anchor_x = x;
+		this.anchor_y = y;
 		this.name = name;
 		this.parent = parent;
 		this.value = value;
 		this.color = color;
+		this.selected = false;
+		cur_x = anchor_x;
+		cur_y = anchor_y;
 	}
 
 	public Character(MainApplet parent){
 
 		this.parent = parent;
-		
+
 	}
 
-	public void display(){
-
+	public void display(int mouseX, int mouseY){
+		moveball(mouseX, mouseY);
+		parent.fill(color);
+		parent.ellipse(cur_x,cur_y,radius*2,radius*2);
+		parent.fill(255);
+	}
+	
+	private void moveball(int new_x , int new_y){
+		if(selected){
+			cur_x = new_x;
+			cur_y = new_y;
+		}/*else{
+			if(cur_x > anchor_x)
+				cur_x--;
+			if(cur_x < anchor_x)
+				cur_x++;
+			if(cur_y > anchor_y)
+				cur_y--;
+			if(cur_y < anchor_y)
+				cur_y++;
+		}*/
 	}
 	
 	public void addTarget(Character character) {

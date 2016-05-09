@@ -1,11 +1,10 @@
 package main.java;
+import java.awt.Color;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import ddf.minim.*;
-
-
-
+import de.looksgood.ani.Ani;
 import processing.core.PApplet;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
@@ -21,13 +20,14 @@ public class MainApplet extends PApplet{
 	private String file = "starwars-episode-1-interactions.json";
 	
 	private final static int width = 1200, height = 650;
-	JSONObject data;
-	JSONArray nodes, links;
+	private JSONObject data;
+	private JSONArray nodes, links;
 	private ArrayList<ArrayList<Character>> characters;
+	private int curepi;
 
-	Minim minim;
-	AudioPlayer song;
-	
+	private Minim minim;
+	private AudioPlayer song;
+		
 	public void setup() {
 		size(width, height);
 		characters = new ArrayList<ArrayList<Character>>();
@@ -37,13 +37,45 @@ public class MainApplet extends PApplet{
 		smooth();
 		loadData();
 		minim = new Minim(this);
-		System.out.println(this.getClass().getResource("/star_wars.mp3").getPath());
-		song = minim.loadFile(this.getClass().getResource("/star_wars.mp3").getPath());
-		song.play();
+		//System.out.println(this.getClass().getResource("/star_wars.mp3").getPath());
+		/*song = minim.loadFile(this.getClass().getResource("/star_wars.mp3").getPath());
+		song.play();*/
+		
+		Ani.init(this);
+		
+		curepi = 0;
 	}
 
 	public void draw() {
-
+		fill(255);
+		rect(0, 0, 1200, 670);
+		stroke(Color.orange.getRGB());
+		ellipse(600, 300, 500, 500);
+		stroke(255);
+		for(int i = 0 ; i < characters.get(curepi + 1).size() ; i++){
+			characters.get(curepi + 1).get(i).display(mouseX, mouseY);
+		}
+		
+		for(int i = 0 ; i < characters.get(curepi + 1).size() ; i++){
+			Character ch  = characters.get(curepi + 1).get(i);
+			if(mouseX > ch.cur_x - ch.radius && mouseX < ch.cur_x + ch.radius){
+				if(mouseY > ch.cur_y - ch.radius && mouseY < ch.cur_y + ch.radius){
+					fill(Color.green.getRGB());
+					rect(mouseX + 10, mouseY - 10, 50 + ch.name.length()*10, 40);
+					fill(0);
+					textSize(20);
+					text(ch.name, mouseX + 20, mouseY + 20);
+					fill(255);
+					if(mousePressed){
+						ch.selected = true;
+					}else{
+						ch.selected = false;
+						Ani.to(ch, (float)0.8, "cur_x", ch.anchor_x, Ani.LINEAR);
+						Ani.to(ch, (float)0.8, "cur_y", ch.anchor_y, Ani.CUBIC_IN_OUT);
+					}
+				}
+			}
+		}
 	}
 
 	private void loadData(){
@@ -51,10 +83,18 @@ public class MainApplet extends PApplet{
 			data = loadJSONObject(path + "starwars-episode-" + i + "-interactions.json");
 			nodes = data.getJSONArray("nodes");
 			links = data.getJSONArray("links");
+			
+			int x = 50;
+			int y = 50;
 
 			for(int j = 0; j <nodes.size(); j++) {
 				characters.get(i-1).add(new Character(this, nodes.getJSONObject(j).getString("name"),
-						10, 10, nodes.getJSONObject(j).getInt("value"), nodes.getJSONObject(j).getString("colour")));
+						x, y, nodes.getJSONObject(j).getInt("value"), unhex(nodes.getJSONObject(j).getString("colour").substring(1))));
+				y += 50;
+				if(y >= 600){
+					y = 50;
+					x += 50;
+				}
 			}
 
 			for(int j=0; j< links.size(); j++) {
