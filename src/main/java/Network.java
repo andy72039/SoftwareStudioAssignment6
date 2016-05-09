@@ -1,5 +1,7 @@
 package main.java;
 
+import java.awt.Color;
+
 import processing.core.PApplet;
 
 /**
@@ -19,7 +21,10 @@ public class Network {
 	}
 
 	public void display(){
-		
+		parent.strokeWeight(10);
+		parent.stroke(Color.orange.getRGB());
+		parent.ellipse(600, 350, 500, 500);
+		parent.strokeWeight(0);
 	}
 	
 }

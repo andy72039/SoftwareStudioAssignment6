@@ -65,8 +65,7 @@ public class Character {
 	}
 	
 	public void addTarget(Character character) {
-		// TODO Auto-generated method stub
-		
+		targets.add(character);
 	}
 	
 }

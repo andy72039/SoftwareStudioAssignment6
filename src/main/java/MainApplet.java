@@ -23,6 +23,7 @@ public class MainApplet extends PApplet{
 	private JSONObject data;
 	private JSONArray nodes, links;
 	private ArrayList<ArrayList<Character>> characters;
+	private Network net;
 	private int curepi;
 
 	private Minim minim;
@@ -36,6 +37,7 @@ public class MainApplet extends PApplet{
 		}
 		smooth();
 		loadData();
+		net = new Network(this);
 		minim = new Minim(this);
 		//System.out.println(this.getClass().getResource("/star_wars.mp3").getPath());
 		/*song = minim.loadFile(this.getClass().getResource("/star_wars.mp3").getPath());
@@ -47,11 +49,15 @@ public class MainApplet extends PApplet{
 	}
 
 	public void draw() {
+		strokeWeight(0);
+		stroke(255);
 		fill(255);
 		rect(0, 0, 1200, 670);
-		stroke(Color.orange.getRGB());
-		ellipse(600, 300, 500, 500);
-		stroke(255);
+		fill(Color.MAGENTA.getRGB());
+		textSize(80);
+		text("Star Wars " + curepi,350,80);
+		fill(255);
+		net.display();
 		for(int i = 0 ; i < characters.get(curepi + 1).size() ; i++){
 			characters.get(curepi + 1).get(i).display(mouseX, mouseY);
 		}
@@ -90,10 +96,10 @@ public class MainApplet extends PApplet{
 			for(int j = 0; j <nodes.size(); j++) {
 				characters.get(i-1).add(new Character(this, nodes.getJSONObject(j).getString("name"),
 						x, y, nodes.getJSONObject(j).getInt("value"), unhex(nodes.getJSONObject(j).getString("colour").substring(1))));
-				y += 50;
+				y += 60;
 				if(y >= 600){
 					y = 50;
-					x += 50;
+					x += 60;
 				}
 			}
 

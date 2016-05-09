@@ -25,6 +25,7 @@ public class Main extends JFrame{
 		window.setContentPane(applet);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setSize(windowWidth, windowHeight);
+		window.setResizable(false);
 		window.setVisible(true);
 	}
 }
