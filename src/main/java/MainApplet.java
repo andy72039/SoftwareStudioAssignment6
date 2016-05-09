@@ -37,8 +37,9 @@ public class MainApplet extends PApplet{
 		smooth();
 		loadData();
 		minim = new Minim(this);
-		/*song = minim.loadFile(this.getClass().getResource("/res/star_wars.mp3").getPath());
-		song.play();*/
+		System.out.println(this.getClass().getResource("/star_wars.mp3").getPath());
+		song = minim.loadFile(this.getClass().getResource("/star_wars.mp3").getPath());
+		song.play();
 	}
 
 	public void draw() {
