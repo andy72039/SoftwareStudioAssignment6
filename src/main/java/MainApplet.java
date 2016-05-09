@@ -1,9 +1,10 @@
+package main.java;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import ddf.minim.*;
 
-package main.java;
+
 
 import processing.core.PApplet;
 import processing.data.JSONArray;
@@ -22,21 +23,22 @@ public class MainApplet extends PApplet{
 	private final static int width = 1200, height = 650;
 	JSONObject data;
 	JSONArray nodes, links;
-	private ArrayList<Character> [] characters;
+	private ArrayList<ArrayList<Character>> characters;
 
 	Minim minim;
 	AudioPlayer song;
 	
 	public void setup() {
 		size(width, height);
+		characters = new ArrayList<ArrayList<Character>>();
 		for(int i=1; i<=7; i++) {
-			characters[i] = new ArrayList<Character>();
+			characters.add(new ArrayList<Character>());
 		}
 		smooth();
 		loadData();
 		minim = new Minim(this);
-		song = minim.loadFile(this.getClass().getResource("/res/star_wars.mp3").getPath());
-		song.play();
+		/*song = minim.loadFile(this.getClass().getResource("/res/star_wars.mp3").getPath());
+		song.play();*/
 	}
 
 	public void draw() {
@@ -50,13 +52,12 @@ public class MainApplet extends PApplet{
 			links = data.getJSONArray("links");
 
 			for(int j = 0; j <nodes.size(); j++) {
-				characters[i].add(new Character(this, nodes.getJSONObject(j).getString("name"),
-						10, 10, nodes.getJSONObject(j).getInt("value"), nodes.getJSONObject(j).getString("color")));
-				//座標需要再修改
+				characters.get(i-1).add(new Character(this, nodes.getJSONObject(j).getString("name"),
+						10, 10, nodes.getJSONObject(j).getInt("value"), nodes.getJSONObject(j).getString("colour")));
 			}
 
 			for(int j=0; j< links.size(); j++) {
-				characters[i].get(links.getJSONObject(j).getInt("source")).addTarget(characters[i].get(links.getJSONObject(j).getInt("target")));
+				characters.get(i-1).get(links.getJSONObject(j).getInt("source")).addTarget(characters.get(i-1).get(links.getJSONObject(j).getInt("target")));
 			}
 		}
 	}

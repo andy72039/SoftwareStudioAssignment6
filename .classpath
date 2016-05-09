@@ -2,12 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="D:/105Spring/Software Studio/Lab/Lab7/Lab7 Materials/lib/core.jar"/>
-	<classpathentry kind="lib" path="C:/Users/user/Downloads/Minim-master/library/jl1.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/user/Downloads/Minim-master/library/jsminim.jar"/>
-	<classpathentry kind="lib" path="C:/Users/user/Downloads/Minim-master/library/minim.jar"/>
-	<classpathentry kind="lib" path="C:/Users/user/Downloads/Minim-master/library/mp3spi1.9.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/user/Downloads/Minim-master/library/tritonus_aos.jar"/>
-	<classpathentry kind="lib" path="C:/Users/user/Downloads/Minim-master/library/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/Minim/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/Minim/jsminim.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/Minim/minim.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/Minim/mp3spi1.9.5.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/Minim/tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/Minim/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/Processing/core.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/Ani/Ani.jar"/>
+	<classpathentry kind="lib" path="F:/大學/大二下/軟體設計與實驗/hw6/Libraries/controlP5/controlP5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
