@@ -109,4 +109,10 @@ public class MainApplet extends PApplet{
 		}
 	}
 
+	public void keyPressed() {
+		if(key >= '1' && key <= '7' ) {
+			curepi = (key-'0');
+		}
+	}
+
 }
