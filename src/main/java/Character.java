@@ -24,6 +24,7 @@ public class Character {
 
 	public Character(PApplet parent, String name, float x, float y, int value, int color) {
 		this.targets = new ArrayList<Link>();
+		//anchor 用來紀錄點的原本位置
 		this.anchor_x = x;
 		this.anchor_y = y;
 		this.name = name;
@@ -40,7 +41,7 @@ public class Character {
 		this.parent = parent;
 
 	}
-
+	//Link class 存放Character 和value讓targets使用
 	class Link {
 		Character character;
 		int value;
@@ -78,12 +79,14 @@ public class Character {
 				cur_y++;
 		}
 	}*/
-	
+
+	//將角色加入targets中	
 	public void addTarget(Character character, int value) {
 		Link link = new Link(character, value);
 		targets.add(link);
 	}
 	
+	//顯示與自己相關角色的連結
 	public void displayLinks() {
 		if(settled){
 			Character ch_t;
@@ -92,7 +95,7 @@ public class Character {
 				ch_t = targets.get(i).getCharacter();
 				value = targets.get(i).getValue();
 				if(ch_t.settled){
-					parent.strokeWeight(value*2);
+					parent.strokeWeight(value*2); //以連線的粗細來表示兩者之間的強弱關係
 					parent.line(cur_x, cur_y, ch_t.cur_x, ch_t.cur_y);
 					parent.strokeWeight(0);
 				}

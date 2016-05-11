@@ -27,7 +27,7 @@ public class MainApplet extends PApplet{
 	private JSONArray nodes, links;
 	private ArrayList<ArrayList<Character>> characters;
 	private Network net;
-	private int curepi;
+	private int curepi; //紀錄當前集數
 
 	private Minim minim;
 	private AudioPlayer song;
@@ -51,6 +51,7 @@ public class MainApplet extends PApplet{
 		/*song = minim.loadFile(this.getClass().getResource("/star_wars.mp3").getPath());
 		song.play();*/
 		
+		//宣告兩個按紐
 		cp5 = new ControlP5(this);
 		Button a = cp5.addButton("buttonADD");
 		a.setLabel("ADD ALL");
@@ -83,6 +84,7 @@ public class MainApplet extends PApplet{
 		fill(255);
 		net.display();
 		
+		//畫出點之間的連線
 		for(int i = 0 ; i < characters.get(curepi - 1).size() ; i++){
 			characters.get(curepi - 1).get(i).displayLinks();
 		}
@@ -90,6 +92,7 @@ public class MainApplet extends PApplet{
 			characters.get(curepi - 1).get(i).display(mouseX, mouseY);
 		}
 		
+		//滑鼠所指到的點會在旁邊顯示名字
 		for(int i = 0 ; i < characters.get(curepi - 1).size() ; i++){
 			Character ch  = characters.get(curepi - 1).get(i);
 			if(mouseX > ch.cur_x - ch.radius && mouseX < ch.cur_x + ch.radius){
@@ -105,6 +108,7 @@ public class MainApplet extends PApplet{
 		}
 	}
 
+	//讀入json檔資料
 	private void loadData(){
 		for(int i=1; i<=7; i++) {
 			data = loadJSONObject(path + "starwars-episode-" + i + "-interactions.json");
@@ -117,6 +121,7 @@ public class MainApplet extends PApplet{
 			for(int j = 0; j <nodes.size(); j++) {
 				characters.get(i-1).add(new Character(this, nodes.getJSONObject(j).getString("name"),
 						x, y, nodes.getJSONObject(j).getInt("value"), unhex(nodes.getJSONObject(j).getString("colour").substring(1))));
+				//排出點的預設位置
 				y += 60;
 				if(y >= 600){
 					y = 50;
@@ -131,12 +136,14 @@ public class MainApplet extends PApplet{
 	}
 
 	public void keyPressed() {
+		//按鍵盤1~7，顯示相應集數
 		if(key >= '1' && key <= '7' ) {
 			if(curepi != key-'0'){
 				clearAll();
 				curepi = (key-'0');
 			}
 		}
+		//按'c'和'a'分別清除或是加入全部
 		else if(key == 'c' || key == 'C') {
 			clearAll();
 		}
@@ -161,11 +168,13 @@ public class MainApplet extends PApplet{
 		}
 	}
 	
+	//將點移回預設的位置
 	private void resetPosition(Character ch){
 		Ani.to(ch, (float)0.8, "cur_x", ch.anchor_x, Ani.LINEAR);
 		Ani.to(ch, (float)0.8, "cur_y", ch.anchor_y, Ani.CUBIC_IN_OUT);
 	}
 	
+	//滑鼠按下時，判斷是按在哪個點上
 	public void mousePressed(){
 		if(!selected){
 			for(int i = 0 ; i < characters.get(curepi - 1).size() ; i++){
@@ -184,7 +193,7 @@ public class MainApplet extends PApplet{
 	}
 	
 	public void mouseReleased(){
-		//curepi++;
+		//判斷滑鼠放開的位置，是否將點加入圓圈
 		if(selected){
 			if(net.onCircle(mouseX, mouseY)){
 				if(!grabbed.settled)
@@ -202,6 +211,7 @@ public class MainApplet extends PApplet{
 		}
 	}
 	
+	//讓點跟著滑鼠軌跡移動
 	public void mouseDragged(){
 		if(selected){
 			grabbed.cur_x = mouseX;
@@ -209,6 +219,7 @@ public class MainApplet extends PApplet{
 		}
 	}
 
+	//定義按紐的行為
 	public void buttonADD(){
 		addAll();
 	}

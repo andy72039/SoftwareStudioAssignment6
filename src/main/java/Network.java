@@ -24,7 +24,7 @@ public class Network {
 	}
 
 	public void display(){
-		//System.out.println(parent.mouseX);
+		//畫出中央的圓圈
 		if(onCircle(parent.mouseX, parent.mouseY))
 			parent.strokeWeight(20);
 		else
@@ -32,22 +32,9 @@ public class Network {
 		parent.stroke(Color.orange.getRGB());
 		parent.ellipse(circle_x, circle_y, circle_r*2, circle_r*2);
 		parent.strokeWeight(0);
-		/*for(int i=0; i< characters.size(); i++) {
-			displayLinks(characters.get(i));
-		}*/
 	}
-	
-	/*private void displayLinks(Character ch) {
-		Character ch_t;
-		int value;
-		for(int i=0; i<ch.targets.size(); i++) {
-			ch_t = ch.targets.get(i).getCharacter();
-			value = ch.targets.get(i).getValue();
-			parent.strokeWeight(value);
-			parent.line(ch.cur_x, ch.cur_y, ch_t.cur_x, ch_t.cur_y);
-		}
-	}*/
 
+	//判斷座標是否位於圓的邊上
 	public boolean onCircle(float x, float y){
 		float x2 = (x - circle_x)*(x - circle_x);
 		float y2 = (y - circle_y)*(y - circle_y);
@@ -57,18 +44,21 @@ public class Network {
 			return false;
 	}
 	
+	//將在圓上的點加入characters
 	public void addToCircle(Character ch){
 		characters.add(ch);
 		ch.settled = true;
 		settleClient();
 	}
 	
+	//移除圓上的點
 	public void removeFromCircle(Character ch){
 		characters.remove(ch);
 		ch.settled = false;
 		settleClient();
 	}
 	
+	//將點自動放到圓的邊上
 	public void settleClient(){
 		int n = characters.size();
 		Character ch;
