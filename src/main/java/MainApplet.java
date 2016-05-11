@@ -82,6 +82,10 @@ public class MainApplet extends PApplet{
 		text("Star Wars " + curepi,350,80);
 		fill(255);
 		net.display();
+		
+		for(int i = 0 ; i < characters.get(curepi - 1).size() ; i++){
+			characters.get(curepi - 1).get(i).displayLinks();
+		}
 		for(int i = 0 ; i < characters.get(curepi - 1).size() ; i++){
 			characters.get(curepi - 1).get(i).display(mouseX, mouseY);
 		}

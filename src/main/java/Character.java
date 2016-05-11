@@ -58,8 +58,6 @@ public class Character {
 
 	public void display(int mouseX, int mouseY){
 		//moveball(mouseX, mouseY);
-		if(settled)
-			displayLinks();
 		parent.fill(color);
 		parent.ellipse(cur_x,cur_y,radius*2,radius*2);
 		parent.fill(255);
@@ -86,14 +84,20 @@ public class Character {
 		targets.add(link);
 	}
 	
-	private void displayLinks() {
-		Character ch_t;
-		int value;
-		for(int i=0; i<targets.size(); i++) {
-			ch_t = targets.get(i).getCharacter();
-			value = targets.get(i).getValue();
-			parent.strokeWeight(value);
-			parent.line(cur_x, cur_y, ch_t.cur_x, ch_t.cur_y);
+	public void displayLinks() {
+		if(settled){
+			Character ch_t;
+			int value;
+			for(int i=0; i<targets.size(); i++) {
+				ch_t = targets.get(i).getCharacter();
+				value = targets.get(i).getValue();
+				if(ch_t.settled){
+					parent.strokeWeight(value*2);
+					parent.line(cur_x, cur_y, ch_t.cur_x, ch_t.cur_y);
+					parent.strokeWeight(0);
+				}
+				//parent.cur
+			}
 		}
 	}
 }
