@@ -15,8 +15,7 @@ public class Character {
 	public float cur_x, cur_y;
 	public String name;
 	private PApplet parent;
-	public ArrayList<Link> targets;
- 
+	private ArrayList<Link> targets;
 	private int value;
 	private int color;
 	public boolean settled;
@@ -43,7 +42,7 @@ public class Character {
 	}
 
 	class Link {
-		Character chacter;
+		Character character;
 		int value;
 		Link(Character character, int value) {
 			this.character = character;
@@ -59,6 +58,8 @@ public class Character {
 
 	public void display(int mouseX, int mouseY){
 		//moveball(mouseX, mouseY);
+		if(settled)
+			displayLinks();
 		parent.fill(color);
 		parent.ellipse(cur_x,cur_y,radius*2,radius*2);
 		parent.fill(255);
@@ -83,5 +84,16 @@ public class Character {
 	public void addTarget(Character character, int value) {
 		Link link = new Link(character, value);
 		targets.add(link);
+	}
+	
+	private void displayLinks() {
+		Character ch_t;
+		int value;
+		for(int i=0; i<targets.size(); i++) {
+			ch_t = targets.get(i).getCharacter();
+			value = targets.get(i).getValue();
+			parent.strokeWeight(value);
+			parent.line(cur_x, cur_y, ch_t.cur_x, ch_t.cur_y);
+		}
 	}
 }
