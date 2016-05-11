@@ -3,6 +3,9 @@ import java.awt.Color;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import controlP5.Button;
+import controlP5.ControlFont;
+import controlP5.ControlP5;
 import ddf.minim.*;
 import de.looksgood.ani.Ani;
 import processing.core.PApplet;
@@ -29,6 +32,8 @@ public class MainApplet extends PApplet{
 	private Minim minim;
 	private AudioPlayer song;
 	
+	private ControlP5 cp5;
+	
 	private boolean selected = false;
 	private Character grabbed = null;
 		
@@ -45,6 +50,22 @@ public class MainApplet extends PApplet{
 		//System.out.println(this.getClass().getResource("/star_wars.mp3").getPath());
 		/*song = minim.loadFile(this.getClass().getResource("/star_wars.mp3").getPath());
 		song.play();*/
+		
+		cp5 = new ControlP5(this);
+		Button a = cp5.addButton("buttonADD");
+		a.setLabel("ADD ALL");
+		a.getCaptionLabel().setSize(40);
+		a.setColorBackground(unhex("FF82D5FD"));
+		a.setSize(200, 50);
+		a.setPosition(900, 100);
+		Button b = cp5.addButton("buttonCLEAR");
+		b.setLabel("CLEAR ALL");
+		//b.getCaptionLabel().setFont( new ControlFont(createFont("Arial",20)));
+		b.getCaptionLabel().setSize(40);
+		b.setColorBackground(new Color(247, 79, 104).getRGB());
+		b.setColorForeground(Color.red.getRGB());
+		b.setSize(200, 50);
+		b.setPosition(900, 200);
 		
 		Ani.init(this);
 		
@@ -107,7 +128,10 @@ public class MainApplet extends PApplet{
 
 	public void keyPressed() {
 		if(key >= '1' && key <= '7' ) {
-			curepi = (key-'1');
+			if(curepi != key-'0'){
+				clearAll();
+				curepi = (key-'0');
+			}
 		}
 		else if(key == 'c' || key == 'C') {
 			clearAll();
@@ -181,4 +205,11 @@ public class MainApplet extends PApplet{
 		}
 	}
 
+	public void buttonADD(){
+		addAll();
+	}
+	
+	public void buttonCLEAR(){
+		clearAll();
+	}
 }
