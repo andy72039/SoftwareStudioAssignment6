@@ -34,17 +34,27 @@ public class Network {
 		parent.strokeWeight(0);
 	}
 	
-	public boolean onCircle(int x, int y){
-		int x2 = (x - circle_x)*(x - circle_x);
-		int y2 = (y - circle_y)*(y - circle_y);
+	public boolean onCircle(float x, float y){
+		float x2 = (x - circle_x)*(x - circle_x);
+		float y2 = (y - circle_y)*(y - circle_y);
 		if(x2 + y2 < Math.pow(circle_r + 10, 2) && x2 + y2 > Math.pow(circle_r - 10, 2))
 			return true;
 		else
 			return false;
 	}
 	
-	public void addCharacter(Character ch){
+	public void addToCircle(Character ch){
 		characters.add(ch);
+		int n = characters.size();
+		for(int i = 0 ; i < n ; i++){
+			ch = characters.get(i);
+			ch.cur_x = (float)(circle_r*Math.cos(i * 2*Math.PI/n) + circle_x);
+			ch.cur_y = (float)(circle_r*Math.sin(i * 2*Math.PI/n) + circle_y);
+		}
+	}
+	
+	public void removeFromCircle(Character ch){
+		characters.remove(ch);
 		int n = characters.size();
 		for(int i = 0 ; i < n ; i++){
 			ch = characters.get(i);

@@ -117,6 +117,9 @@ public class MainApplet extends PApplet{
 				Character ch  = characters.get(curepi - 1).get(i);
 				if(mouseX > ch.cur_x - ch.radius && mouseX < ch.cur_x + ch.radius){
 					if(mouseY > ch.cur_y - ch.radius && mouseY < ch.cur_y + ch.radius){
+						if(net.onCircle(ch.cur_x, ch.cur_y)){
+							net.removeFromCircle(ch);
+						}
 						selected = true;
 						grabbed = ch;
 					}
@@ -129,7 +132,7 @@ public class MainApplet extends PApplet{
 		//curepi++;
 		if(selected){
 			if(net.onCircle(mouseX, mouseY)){
-				net.addCharacter(grabbed);
+				net.addToCircle(grabbed);
 			}else{
 				Ani.to(grabbed, (float)0.8, "cur_x", grabbed.anchor_x, Ani.LINEAR);
 				Ani.to(grabbed, (float)0.8, "cur_y", grabbed.anchor_y, Ani.CUBIC_IN_OUT);
