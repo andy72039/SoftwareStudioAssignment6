@@ -117,18 +117,25 @@ public class MainApplet extends PApplet{
 		}
 	}
 	private void clearAll() {
-		for(int i=0; i<characters.get(curepi).size(); i++) {
-			Character ch = characters.get(curepi).get(i);
-			ch.cur_x = ch.anchor_x;
-			ch.cur_y = ch.anchor_y;
-			net.removeFromCircle(ch);
+		for(int i=0; i<characters.get(curepi - 1).size(); i++) {
+			Character ch = characters.get(curepi - 1).get(i);
+			if(ch.settled){
+				net.removeFromCircle(ch);
+				resetPosition(ch);
+			}
 		}	
 	}
 	private void addAll() {
-		for(int i=0; i<characters.get(curepi+1).size(); i++) {
-			Character ch = characters.get(curepi-1).get(i);
-			net.addToCircle(ch);
+		for(int i=0; i<characters.get(curepi - 1).size(); i++) {
+			Character ch = characters.get(curepi - 1).get(i);
+			if(!ch.settled)
+				net.addToCircle(ch);
 		}
+	}
+	
+	private void resetPosition(Character ch){
+		Ani.to(ch, (float)0.8, "cur_x", ch.anchor_x, Ani.LINEAR);
+		Ani.to(ch, (float)0.8, "cur_y", ch.anchor_y, Ani.CUBIC_IN_OUT);
 	}
 	
 	public void mousePressed(){
@@ -160,8 +167,7 @@ public class MainApplet extends PApplet{
 				if(grabbed.settled){
 					net.removeFromCircle(grabbed);
 				}
-				Ani.to(grabbed, (float)0.8, "cur_x", grabbed.anchor_x, Ani.LINEAR);
-				Ani.to(grabbed, (float)0.8, "cur_y", grabbed.anchor_y, Ani.CUBIC_IN_OUT);
+				resetPosition(grabbed);
 			}
 			grabbed = null;
 			selected = false;
