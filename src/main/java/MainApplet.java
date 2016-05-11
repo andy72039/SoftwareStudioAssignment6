@@ -100,7 +100,7 @@ public class MainApplet extends PApplet{
 			}
 
 			for(int j=0; j< links.size(); j++) {
-				characters.get(i-1).get(links.getJSONObject(j).getInt("source")).addTarget(characters.get(i-1).get(links.getJSONObject(j).getInt("target")));
+				characters.get(i-1).get(links.getJSONObject(j).getInt("source")).addTarget(characters.get(i-1).get(links.getJSONObject(j).getInt("target")), links.getJSONObject(j).getInt("value"));
 			}
 		}
 	}
