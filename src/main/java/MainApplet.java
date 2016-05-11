@@ -28,6 +28,9 @@ public class MainApplet extends PApplet{
 
 	private Minim minim;
 	private AudioPlayer song;
+	
+	private boolean selected = false;
+	private Character grabbed = null;
 		
 	public void setup() {
 		size(width, height);
@@ -45,7 +48,7 @@ public class MainApplet extends PApplet{
 		
 		Ani.init(this);
 		
-		curepi = 0;
+		curepi = 1;
 	}
 
 	public void draw() {
@@ -58,12 +61,12 @@ public class MainApplet extends PApplet{
 		text("Star Wars " + curepi,350,80);
 		fill(255);
 		net.display();
-		for(int i = 0 ; i < characters.get(curepi + 1).size() ; i++){
-			characters.get(curepi + 1).get(i).display(mouseX, mouseY);
+		for(int i = 0 ; i < characters.get(curepi - 1).size() ; i++){
+			characters.get(curepi - 1).get(i).display(mouseX, mouseY);
 		}
 		
-		for(int i = 0 ; i < characters.get(curepi + 1).size() ; i++){
-			Character ch  = characters.get(curepi + 1).get(i);
+		for(int i = 0 ; i < characters.get(curepi - 1).size() ; i++){
+			Character ch  = characters.get(curepi - 1).get(i);
 			if(mouseX > ch.cur_x - ch.radius && mouseX < ch.cur_x + ch.radius){
 				if(mouseY > ch.cur_y - ch.radius && mouseY < ch.cur_y + ch.radius){
 					fill(Color.green.getRGB());
@@ -72,13 +75,6 @@ public class MainApplet extends PApplet{
 					textSize(20);
 					text(ch.name, mouseX + 20, mouseY + 20);
 					fill(255);
-					if(mousePressed){
-						ch.selected = true;
-					}else{
-						ch.selected = false;
-						Ani.to(ch, (float)0.8, "cur_x", ch.anchor_x, Ani.LINEAR);
-						Ani.to(ch, (float)0.8, "cur_y", ch.anchor_y, Ani.CUBIC_IN_OUT);
-					}
 				}
 			}
 		}
@@ -112,6 +108,41 @@ public class MainApplet extends PApplet{
 	public void keyPressed() {
 		if(key >= '1' && key <= '7' ) {
 			curepi = (key-'1');
+		}
+	}
+	
+	public void mousePressed(){
+		if(!selected){
+			for(int i = 0 ; i < characters.get(curepi - 1).size() ; i++){
+				Character ch  = characters.get(curepi - 1).get(i);
+				if(mouseX > ch.cur_x - ch.radius && mouseX < ch.cur_x + ch.radius){
+					if(mouseY > ch.cur_y - ch.radius && mouseY < ch.cur_y + ch.radius){
+						selected = true;
+						grabbed = ch;
+					}
+				}
+			}
+		}
+	}
+	
+	public void mouseReleased(){
+		//curepi++;
+		if(selected){
+			if(net.onCircle(mouseX, mouseY)){
+				net.addCharacter(grabbed);
+			}else{
+				Ani.to(grabbed, (float)0.8, "cur_x", grabbed.anchor_x, Ani.LINEAR);
+				Ani.to(grabbed, (float)0.8, "cur_y", grabbed.anchor_y, Ani.CUBIC_IN_OUT);
+			}
+			grabbed = null;
+			selected = false;
+		}
+	}
+	
+	public void mouseDragged(){
+		if(selected){
+			grabbed.cur_x = mouseX;
+			grabbed.cur_y = mouseY;
 		}
 	}
 

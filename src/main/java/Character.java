@@ -18,7 +18,7 @@ public class Character {
 	private ArrayList<Character> targets;
 	private int value;
 	private int color;
-	public boolean selected;
+	public boolean settled;
 	
 	public int radius = 20;
 
@@ -30,7 +30,7 @@ public class Character {
 		this.parent = parent;
 		this.value = value;
 		this.color = color;
-		this.selected = false;
+		this.settled = false;
 		cur_x = anchor_x;
 		cur_y = anchor_y;
 	}
@@ -42,17 +42,17 @@ public class Character {
 	}
 
 	public void display(int mouseX, int mouseY){
-		moveball(mouseX, mouseY);
+		//moveball(mouseX, mouseY);
 		parent.fill(color);
 		parent.ellipse(cur_x,cur_y,radius*2,radius*2);
 		parent.fill(255);
 	}
 	
-	private void moveball(int new_x , int new_y){
+	/*private void moveball(int new_x , int new_y){
 		if(selected){
 			cur_x = new_x;
 			cur_y = new_y;
-		}/*else{
+		}else{
 			if(cur_x > anchor_x)
 				cur_x--;
 			if(cur_x < anchor_x)
@@ -61,8 +61,8 @@ public class Character {
 				cur_y--;
 			if(cur_y < anchor_y)
 				cur_y++;
-		}*/
-	}
+		}
+	}*/
 	
 	public void addTarget(Character character) {
 		targets.add(character);
