@@ -49,6 +49,12 @@ public class Character {
 			this.character = character;
 			this.value = value;
 		}
+		Character getCharacter() {
+			return this.character;
+		}
+		int getValue() {
+			return this.value;
+		}
 	}
 
 	public void display(int mouseX, int mouseY){
