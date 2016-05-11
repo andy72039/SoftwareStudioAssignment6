@@ -45,17 +45,19 @@ public class Network {
 	
 	public void addToCircle(Character ch){
 		characters.add(ch);
-		int n = characters.size();
-		for(int i = 0 ; i < n ; i++){
-			ch = characters.get(i);
-			ch.cur_x = (float)(circle_r*Math.cos(i * 2*Math.PI/n) + circle_x);
-			ch.cur_y = (float)(circle_r*Math.sin(i * 2*Math.PI/n) + circle_y);
-		}
+		ch.settled = true;
+		settleClient();
 	}
 	
 	public void removeFromCircle(Character ch){
 		characters.remove(ch);
+		ch.settled = false;
+		settleClient();
+	}
+	
+	public void settleClient(){
 		int n = characters.size();
+		Character ch;
 		for(int i = 0 ; i < n ; i++){
 			ch = characters.get(i);
 			ch.cur_x = (float)(circle_r*Math.cos(i * 2*Math.PI/n) + circle_x);
