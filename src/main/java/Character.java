@@ -15,7 +15,7 @@ public class Character {
 	public float cur_x, cur_y;
 	public String name;
 	private PApplet parent;
-	private ArrayList<Link> targets;
+	public ArrayList<Link> targets;
  
 	private int value;
 	private int color;
