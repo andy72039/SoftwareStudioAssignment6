@@ -109,6 +109,26 @@ public class MainApplet extends PApplet{
 		if(key >= '1' && key <= '7' ) {
 			curepi = (key-'1');
 		}
+		else if(key == 'c' || key == 'C') {
+			clearAll();
+		}
+		else if(key == 'a' || key == 'A') {
+			addAll();
+		}
+	}
+	private void clearAll() {
+		for(int i=0; i<characters.get(curepi).size(); i++) {
+			Character ch = characters.get(curepi).get(i);
+			ch.cur_x = ch.anchor_x;
+			ch.cur_y = ch.anchor_y;
+			net.removeFromCircle(ch);
+		}	
+	}
+	private void addAll() {
+		for(int i=0; i<characters.get(curepi+1).size(); i++) {
+			Character ch = characters.get(curepi-1).get(i);
+			net.addToCircle(ch);
+		}
 	}
 	
 	public void mousePressed(){
