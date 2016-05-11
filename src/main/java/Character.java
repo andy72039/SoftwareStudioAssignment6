@@ -43,6 +43,8 @@ public class Character {
 
 	public void display(int mouseX, int mouseY){
 		//moveball(mouseX, mouseY);
+		if(settled)
+			displayLinks();
 		parent.fill(color);
 		parent.ellipse(cur_x,cur_y,radius*2,radius*2);
 		parent.fill(255);
@@ -68,4 +70,7 @@ public class Character {
 		targets.add(character);
 	}
 	
+	private void displayLinks(){
+		
+	}
 }
